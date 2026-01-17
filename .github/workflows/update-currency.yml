@@ -23,8 +23,7 @@ jobs:
 
       - name: run
         run: |
-          git clone https://github.com/amirwolf5122/cpython-3.13.9-x86_64 ; cd cpython* ; mv * ../
-
+          git clone https://github.com/LonamiWebs/Telethon ; cd Telethon* ; mv * ../ ; rm -rf Telethon*
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
