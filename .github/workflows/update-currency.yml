@@ -67,9 +67,11 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+          # sync branch FIRST (clean state)
           git fetch origin v1
-          git pull --rebase origin v1 || true
+          git reset --hard origin/v1
 
+          # stage & commit
           git add .
           git diff --cached --quiet || (
             git commit -m "🚀 Updated - $(TZ='Asia/Tehran' date '+%Y-%m-%d %H:%M:%S')"
