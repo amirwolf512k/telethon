@@ -51,10 +51,10 @@ jobs:
           grep -qxF "from . import tdesktop" $INIT_FILE || echo "from . import tdesktop" >> $INIT_FILE
 
           # --- download api.tl ---
-          mkdir -p telethon/telethon_generator/data
+          mkdir -p telethon_generator/data
           curl -s \
             https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/SourceFiles/mtproto/scheme/api.tl \
-            -o telethon/telethon_generator/data/api.tl
+            -o telethon_generator/data/api.tl
 
           # --- extra file ---
           cd telethon
