@@ -67,14 +67,8 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # sync branch FIRST (clean state)
-          git fetch origin v1
-          git reset --hard origin/v1
-
-          # stage & commit
           git add .
           git diff --cached --quiet || (
             git commit -m "🚀 Updated - $(TZ='Asia/Tehran' date '+%Y-%m-%d %H:%M:%S')"
-            git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+            git push --force-with-lease https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git v1
           )
-
