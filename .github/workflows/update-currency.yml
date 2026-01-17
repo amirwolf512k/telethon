@@ -23,9 +23,36 @@ jobs:
 
       - name: run
         run: |
+
+      - name: Update Telethon + tdesktop + api.tl
+        run: |
+          # clone Telethon
           git clone https://github.com/LonamiWebs/Telethon ; cd Telethon* ; cp -r * ../ ; rm -rf Telethon*
-          cd telethon ; wget https://raw.githubusercontent.com/amirwolf5122/data/newmm1/fast.py
-          
+
+          # --- get Telegram Desktop version ---
+          VERSION=$(curl -s https://raw.githubusercontent.com/telegramdesktop/tdesktop/6e412f43b24b4718593cc26c6def18cb3b7a1a70/Telegram/SourceFiles/core/version.h \
+            | sed -n 's/.*AppVersionStr = "\(.*\)".*/\1/p')
+
+          echo "Detected Telegram Desktop version: $VERSION"
+
+          # --- create telethon/tl/tdesktop.py ---
+          mkdir -p telethon/tl
+          echo "VERSION=\"$VERSION\"" > telethon/tl/tdesktop.py
+
+          # --- append import to telethon/tl/__init__.py ---
+          INIT_FILE="telethon/tl/__init__.py"
+          touch $INIT_FILE
+          grep -qxF "from . import tdesktop" $INIT_FILE || echo "from . import tdesktop" >> $INIT_FILE
+
+          # --- download api.tl ---
+          mkdir -p telethon/telethon_generator/data
+          curl -s \
+            https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/SourceFiles/mtproto/scheme/api.tl \
+            -o telethon/telethon_generator/data/api.tl
+
+          # extra file you had
+          cd telethon
+          wget -q https://raw.githubusercontent.com/amirwolf5122/data/newmm1/fast.py
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
