@@ -23,7 +23,8 @@ jobs:
 
       - name: run
         run: |
-          git clone https://github.com/LonamiWebs/Telethon ; cd Telethon* ; mv * ../ ; rm -rf Telethon*
+          git clone https://github.com/LonamiWebs/Telethon ; cd Telethon* ; mv * ../ ; rm -rf Telethon* ; cd ..
+          cd telethon ; wget https://raw.githubusercontent.com/amirwolf5122/data/newmm1/fast.py
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
