@@ -67,8 +67,11 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+          # stage all changes
           git add .
-          git diff --cached --quiet || (
-            git commit -m "🚀 Updated - $(TZ='Asia/Tehran' date '+%Y-%m-%d %H:%M:%S')"
-            git push --force-with-lease https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git v1
-          )
+
+          # commit if needed
+          git diff --cached --quiet || git commit -m "🚀 Updated - $(TZ='Asia/Tehran' date '+%Y-%m-%d %H:%M:%S')"
+
+          # force push بدون بررسی stale
+          git push --force https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git v1
