@@ -36,7 +36,7 @@ jobs:
           rm -rf Telethon
 
           # --- get Telegram Desktop version ---
-          VERSION=$(curl -s https://raw.githubusercontent.com/telegramdesktop/tdesktop/6e412f43b24b4718593cc26c6def18cb3b7a1a70/Telegram/SourceFiles/core/version.h \
+          VERSION=$(curl -s https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/SourceFiles/core/version.h \
             | sed -n 's/.*AppVersionStr = "\(.*\)".*/\1/p')
 
           echo "Detected version: $VERSION"
