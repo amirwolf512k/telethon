@@ -1,0 +1,77 @@
+name: Update Currency Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */12 * * *'
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Initialize Go Module (if needed)
+        run: go mod init Chand-api || true
+
+      - name: Update Telethon + Telegram Desktop data
+        run: |
+          # --- remove Telethon submodule if exists ---
+          git submodule deinit -f Telethon || true
+          git rm -f Telethon || true
+          rm -rf .git/modules/Telethon
+
+          # --- clone Telethon fresh ---
+          git clone https://github.com/LonamiWebs/Telethon
+          rsync -a Telethon/ .
+          rm -rf Telethon
+
+          # --- get Telegram Desktop version ---
+          VERSION=$(curl -s https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/SourceFiles/core/version.h \
+            | sed -n 's/.*AppVersionStr = "\(.*\)".*/\1/p')
+
+          echo "Detected version: $VERSION"
+
+          # --- create tdesktop.py ---
+          mkdir -p telethon/tl
+          echo "VERSION=\"$VERSION\"" > telethon/tl/tdesktop.py
+
+          # --- ensure import in __init__.py ---
+          INIT_FILE="telethon/tl/__init__.py"
+          touch $INIT_FILE
+          grep -qxF "from . import tdesktop" $INIT_FILE || echo "from . import tdesktop" >> $INIT_FILE
+
+          # --- download api.tl ---
+          mkdir -p telethon_generator/data
+          curl -s \
+            https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/SourceFiles/mtproto/scheme/api.tl \
+            -o telethon_generator/data/api.tl
+
+          # --- extra file ---
+          cd telethon
+          wget -q https://raw.githubusercontent.com/amirwolf5122/data/newmm1/fast.py
+
+      - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # stage all changes
+          git add .
+
+          # commit if needed
+          git diff --cached --quiet || git commit -m "🚀 Updated - $(TZ='Asia/Tehran' date '+%Y-%m-%d %H:%M:%S')"
+
+          # force push بدون بررسی stale
+          git push --force https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git v1
