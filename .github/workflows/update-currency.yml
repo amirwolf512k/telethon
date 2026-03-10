@@ -55,7 +55,7 @@ jobs:
           curl -s \
             https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/SourceFiles/mtproto/scheme/api.tl \
             -o telethon_generator/data/api.tl
-          #sed -i -E 's/int from_rank:flags[^?]*\?//g' telethon_generator/data/api.tl
+          perl -i -pe 's/int from_rank:flags\d*\?\s*//g' telethon_generator/data/api.tl
           
           # --- extra file ---
           cd telethon
