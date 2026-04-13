@@ -51,7 +51,7 @@ Bug fixes
 ~~~~~~~~~
 
 * Python 3.14 compatibility.
-* The library should now be importable without haing ``sqlite3`` (again).
+* The library should now be importable without having ``sqlite3`` (again).
 * ``InvalidBufferError`` was not being handled correctly when receiving incomplete data.
 * ``iter_messages`` on scheduled and reverse should no longer crash.
 
