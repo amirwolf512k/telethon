@@ -223,6 +223,7 @@ class Message(ChatGetter, SenderGetter, TLObject):
         suggested_post: Optional[types.TypeSuggestedPost] = None,
         schedule_repeat_period: Optional[int] = None,
         summary_from_language: Optional[str] = None,
+        rich_message: Optional[types.RichMessage] = None,
         # Copied from MessageService.__init__ signature
         action: Optional[types.TypeMessageAction] = None,
         reactions_are_possible: Optional[bool] = None,
@@ -276,6 +277,7 @@ class Message(ChatGetter, SenderGetter, TLObject):
         self.suggested_post = suggested_post
         self.schedule_repeat_period = schedule_repeat_period
         self.summary_from_language = summary_from_language
+        self.rich_message = rich_message
         # Copied from MessageService.__init__ body
         self.action = action
         self.reactions_are_possible = reactions_are_possible
