@@ -356,7 +356,8 @@ class MTProtoSender:
         Cleanly disconnects and then reconnects.
         """
         self._log.info('Closing current connection to begin reconnect...')
-        await self._connection.disconnect()
+        if self._connection is not None:
+            await self._connection.disconnect()
 
         await helpers._cancel(
             self._log,
@@ -380,6 +381,9 @@ class MTProtoSender:
         ok = True
         # We're already "retrying" to connect, so we don't want to force retries
         for attempt in retry_range(retries, force_retry=False):
+            if not self._user_connected:
+                ok = False
+                break
             try:
                 await self._connect()
             except (IOError, asyncio.TimeoutError) as e:
