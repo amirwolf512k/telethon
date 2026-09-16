@@ -58,7 +58,12 @@ jobs:
           # --- extra file ---
           cd telethon
           wget -q https://raw.githubusercontent.com/amirwolf5122/data/newmm1/fast.py
-
+          sed -i \
+          -e "s/reply_to: typing\.Optional\['TypeInputReplyTo'\]/reply_to: typing.Optional['TypeInputReplyTo'],/" \
+          -e 's/effect=message_effect_id/effect=message_effect_id,/' \
+          -e 's/suggested_post=suggested_post/suggested_post=suggested_post)/' \
+          -e 's/invert_media: bool = False/invert_media: bool = False,/' \
+          telethon/client/messages.py
       - name: Commit and Push Changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
