@@ -63,7 +63,7 @@ jobs:
           -e 's/effect=message_effect_id/effect=message_effect_id,/' \
           -e 's/suggested_post=suggested_post/suggested_post=suggested_post)/' \
           -e 's/invert_media: bool = False/invert_media: bool = False,/' \
-          telethon/client/messages.py
+          client/messages.py
       - name: Commit and Push Changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
