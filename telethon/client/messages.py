@@ -640,7 +640,7 @@ class MessageMethods:
             clear_draft: bool = False,
             noforwards: bool = False,
             update_stickersets_order: bool = False,
-            invert_media: bool = False
+            invert_media: bool = False,
             allow_paid_floodskip: bool = False,
             buttons: typing.Optional['hints.MarkupLike'] = None,
             silent: bool = None,
@@ -941,6 +941,7 @@ class MessageMethods:
                 effect=message_effect_id,
                 allow_paid_stars=allow_paid_stars,
                 suggested_post=suggested_post
+            )
             message = message.message
         else:
             if formatting_entities is None:
@@ -966,7 +967,7 @@ class MessageMethods:
                 schedule_date=schedule,
                 schedule_repeat_period=schedule_repeat_period,
                 send_as=await self.get_input_entity(send_as) if send_as else None,
-                effect=message_effect_id
+                effect=message_effect_id,
                 allow_paid_stars=allow_paid_stars,
                 suggested_post=suggested_post
             )
@@ -1002,7 +1003,7 @@ class MessageMethods:
             noforwards: bool = False,
             allow_paid_floodskip: bool = False,
             top_msg_id: typing.Optional[int] = None,
-            reply_to: typing.Optional['TypeInputReplyTo']
+            reply_to: typing.Optional['TypeInputReplyTo'],
             as_album: bool = None,
             schedule: 'hints.DateLike' = None,
             schedule_repeat_period: typing.Optional[int] = None,
