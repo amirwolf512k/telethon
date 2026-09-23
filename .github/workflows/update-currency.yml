@@ -58,9 +58,9 @@ jobs:
           # --- extra file ---
           cd telethon
           wget -q https://raw.githubusercontent.com/amirwolf5122/data/newmm1/fast.py
-          curl -s \
-            https://raw.githubusercontent.com/amirwolf512k/telethon/main/a.py \
-            -o client/messages.py
+          #curl -s \
+          #  https://raw.githubusercontent.com/amirwolf512k/telethon/main/a.py \
+          #  -o client/messages.py
       - name: Commit and Push Changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
