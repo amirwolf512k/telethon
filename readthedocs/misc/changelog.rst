@@ -13,6 +13,17 @@ it can take advantage of new goodies!
 
 .. contents:: List of All Versions
 
+New layer (v1.46)
+=================
+
++------------------------+
+| Scheme layer used: 233 |
++------------------------+
+
+`View new and changed raw API methods <https://diff.telethon.dev/?from=229&to=233>`__.
+
+No features, just a layer upgrade.
+
 New layer (v1.45)
 =================
 
@@ -21,8 +32,6 @@ New layer (v1.45)
 +------------------------+
 
 `View new and changed raw API methods <https://diff.telethon.dev/?from=227&to=229>`__.
-
-The below changelog also includes some of the fixes made after 1.43.0.
 
 Enhancements
 ~~~~~~~~~~~~
